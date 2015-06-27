@@ -1,0 +1,152 @@
+@charset "utf-8";
+/* CSS Document */
+html, body {
+	height: 100%;
+}
+.fh {
+	width: 100%;
+	height: 100%;
+}
+.bg {
+	position: fixed;
+	top: 0;
+	z-index: -999;
+	background: url(/fishPond/resource/images/backyard-pond-waterfall-on-comfortable-backyard-design-ideas-31.jpg)
+}
+.form-signin {
+	width: 330px;
+	padding: 15px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -165px;
+	margin-top: -165px;
+	color: #FFF;
+}
+#form-bg {
+	height: 100%;
+	width:100%;
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:-1;
+	opacity: 0.45;
+	filter: alpha(opacity=45); /* For IE8 and earlier */
+	background-color: #000000;
+}
+.form-signin .form-signin-heading{
+	margin-bottom: 20px;
+	margin-top: 10px;
+	text-align:center;
+}
+.form-signin .checkbox {
+	font-weight: normal;
+}
+.form-signin .form-control {
+	position: relative;
+	height: auto;
+	outline: none;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 10px;
+	font-size: 16px;
+}
+.form-signin .form-control:focus {
+	z-index: 2;
+}
+.form-signin input[type="text"] {
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+	margin-bottom: 10px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+#nav{
+	min-width:200px;
+}
+#board{
+	min-width:800px;
+}
+.user-style-main {
+	background-color: #C0DEED;
+}
+.user-style-header{
+    background-color: #ffffff;
+}
+.user-style-board {
+	background-color: #FFFFFF;
+	padding-bottom: 15px;
+	padding-top: 15px;
+	margin-top: 10px;
+}
+.nav-main{
+	width: 15%;
+	padding-right: 15px;
+	padding-left: 15px;
+	padding-top:8px;
+	padding-bottom:8px;
+	background-color: aliceblue;
+	border: 1px solid #e7e7e7;
+	border-radius: 4px;
+}
+.user-panel {
+	/* border-left: 1px solid #CCC; */
+	padding-left: 15px;
+	width: 82%;
+	height:100%;
+}
+.navbar-btn-group {
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+.navbar-btn-group .unit{
+	display: inline-block;
+	margin-right:10px;
+}
+.user-li-none{
+	list-style:none;
+	display:inline-block;
+}
+.user-li-none > a{
+	color:inherit;
+}
+#online-status-true{
+	color:lawngreen;
+}
+#online-status-false{
+	color:darkgray;
+}
+table > tbody > tr{
+	cursor:pointer;
+}
+
+.user-glyphicon-orange{
+	color: orange;
+}
+#user-head-mainpage{
+	float:right;
+	display: inline-block;
+	padding: 5px 0;
+	vertical-align: middle;
+}
+
+/* ==========================================================
+ * Spinner
+ * =========================================================*/
+.spinner{
+     width:60px;
+     height:60px;
+     margin:30px auto;
+     position:relative;
+     background:url(/fishPond/resource/images/progressCircle.png);
+     background-size:100%;
+     -webkit-animation: rotate 1.5s linear infinite;
+     -moz-animation: rotate 1.5s linear infinite;
+     animation: rotate 1.5s linear infinite;
+}
+@keyframes rotate { 100% { transform:rotate(-360deg); } }
