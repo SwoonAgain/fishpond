@@ -48,20 +48,6 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr class="hidden">
-			<th scope="row"><span class="glyphicon glyphicon-unchecked"
-				aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;0</th>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td id="online-status-true"><span
-				class="glyphicon glyphicon-certificate" aria-hidden="true"></span></td>
-			<td><span
-				class="glyphicon glyphicon-eye-open user-glyphicon-orange"
-				aria-hidden="true" data-toggle="modal" data-target="#device-detail-modal" data-href=""></span><span
-				class="sr-only">查看</span></td>
-		</tr>
 		<c:forEach var="onlinedevice" items="${onlinedevices}" varStatus="i">
 			<tr>
 				<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -72,9 +58,9 @@
 				<td>${onlinedevice.platformId}</td>
 				<td id="online-status-${onlinedevice.onlineStatus}"><span
 					class="glyphicon glyphicon-certificate" aria-hidden="true"></span></td>
-				<td><span
+				<td class="viewDeviceDetail"  data-toggle="modal" data-target="#device-detail-modal" data-href="${baseurl }/rest/device-detail/${onlinedevice._id}"><span
 					class="glyphicon glyphicon-eye-open user-glyphicon-orange"
-					aria-hidden="true" data-toggle="modal" data-target="#device-detail-modal" data-href="${baseurl }/rest/device-detail/${onlinedevice._id}"></span><span
+					aria-hidden="true"></span><span
 					class="sr-only">查看</span></td>
 			</tr>
 		</c:forEach>

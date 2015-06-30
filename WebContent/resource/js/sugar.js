@@ -51,16 +51,19 @@ $(function () {
 			checkbox.removeClass("glyphicon-check");
 			checkbox.addClass("glyphicon-unchecked");
 		}
+		var togglecheck = function(checkbox){
+			checkbox.toggleClass("glyphicon-unchecked glyphicon-check");
+		}
 		//绑定选择事件
 		$("#select-invert a").on("click",function(){
 			var checkboies = $(this).parents("table").find("tbody tr th span");
 			var allchecked = true;
 			checkboies.each(function(index){
 				var checkbox = $(this);
-				checkbox.toggleClass("glyphicon-unchecked glyphicon-check");
+				togglecheck(checkbox);
 				allchecked = allchecked&checkbox.hasClass("glyphicon-check");
 			});
-			var headcheckbox = $(this).parents("th").find("glyphicon");
+			var headcheckbox = $(this).parents("th").find(".glyphicon");
 			if(allchecked){
 				checked(headcheckbox);
 			}else{
@@ -73,7 +76,7 @@ $(function () {
 				var checkbox = $(this);
 				checked(checkbox);
 			});
-			var headcheckbox = $(this).parents("th").find("glyphicon");
+			var headcheckbox = $(this).parents("th").find(".glyphicon");
 			checked(headcheckbox);
 		});
 		$("#deselect-all a").on("click",function(){
@@ -82,8 +85,26 @@ $(function () {
 				var checkbox = $(this);
 				unchecked(checkbox);
 			});
-			var headcheckbox = $(this).parents("th").find("glyphicon");
+			var headcheckbox = $(this).parents("th").find(".glyphicon");
 			unchecked(headcheckbox);
+		});
+		
+		//tablerow select
+		$("tbody tr th").on("click",function(){
+			var checkbox = $(this).find("span");
+			togglecheck(checkbox);
+			var checkboies = $(this).parents("table").find("tbody tr th span");
+			var allchecked = true;
+			checkboies.each(function(index){
+				var checkbox = $(this);
+				allchecked = allchecked&checkbox.hasClass("glyphicon-check");
+			});
+			var headcheckbox = $(this).parents("table").find("thead th .glyphicon");
+			if(allchecked){
+				checked(headcheckbox);
+			}else{
+				unchecked(headcheckbox);
+			}
 		});
 	}
 

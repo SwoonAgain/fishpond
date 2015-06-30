@@ -43,16 +43,6 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr class="hidden">
-			<th scope="row"><span class="glyphicon glyphicon-unchecked"
-				aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;0</th>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td id="online-status-true"><span
-				class="glyphicon glyphicon-certificate" aria-hidden="true"></span></td>
-		</tr>
 		<c:forEach var="device" items="${alldevices}" varStatus="i">
 			<tr>
 				<th scope="row"><span class="glyphicon glyphicon-unchecked"
