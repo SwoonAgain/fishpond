@@ -31,9 +31,9 @@
 					href="#" class="dropdown-toggle" data-toggle="dropdown"
 					role="button" aria-expanded="false">选择<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">全选</a></li>
-						<li><a href="#">全部不选</a></li>
-						<li><a href="#">反选</a></li>
+						<li id="select-all"><a href="#">全选</a></li>
+						<li id="deselect-all"><a href="#">全部不选</a></li>
+						<li id="select-invert"><a href="#">反选</a></li>
 					</ul></span></th>
 			<th>公司名称</th>
 			<th>鱼塘名称</th>

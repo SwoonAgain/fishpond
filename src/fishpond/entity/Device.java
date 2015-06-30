@@ -79,7 +79,7 @@ public class Device extends BaseEntity{
 		this.platformId = platformId;
 	}
 
-	public boolean getOnlineStatus() {
+	public boolean isOnlineStatus() {
 		return onlineStatus;
 	}
 
