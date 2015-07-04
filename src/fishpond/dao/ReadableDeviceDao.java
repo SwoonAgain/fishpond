@@ -6,7 +6,8 @@ import fishpond.entity.ReadableDevice;
 
 public interface ReadableDeviceDao {
 	
-	List<ReadableDevice> findAll();
+	List<ReadableDevice> find(String orderBy,int begin,int count,String ...strings);
 
-	List<ReadableDevice> findOnline();
+	int getDeviceAmount(String... filters);
+	
 }

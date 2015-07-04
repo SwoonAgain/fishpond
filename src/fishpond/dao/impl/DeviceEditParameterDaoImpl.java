@@ -42,7 +42,7 @@ public class DeviceEditParameterDaoImpl implements DeviceEditParameterDao {
 				parameter.setThirdMealOpenTime(rs.getString(position++));
 				parameter.setThirdMealCloseTime(rs.getString(position++));
 				parameter.setFourthMealQuantity(rs.getString(position++));
-				parameter.setFourthMealCloseTime(rs.getString(position++));
+				parameter.setFourthMealOpenTime(rs.getString(position++));
 				parameter.setFourthMealCloseTime(rs.getString(position++));
 				return parameter;
 			}

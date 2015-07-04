@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
                       http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-  version="3.0">
+	version="3.0">
 	<display-name>fish-pond</display-name>
 	<description>鱼塘抛料管理系统</description>
-	
+
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
@@ -22,7 +21,7 @@
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-	
+
 	<servlet>
 		<servlet-name>springmvc</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -43,20 +42,31 @@
 		<servlet-name>springmvc</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
-	
+
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+        <param-name>forceEncoding</param-name>
+        <param-value>true</param-value>
+    </init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 	<listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-<!-- 
-	<servlet>
-	    <servlet-name>server</servlet-name>
-	    <servlet-class>fishpond.server.Server</servlet-class>
-	    <load-on-startup>2</load-on-startup>
-	</servlet>
- -->
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- <servlet> <servlet-name>server</servlet-name> <servlet-class>fishpond.server.Server</servlet-class> 
+		<load-on-startup>2</load-on-startup> </servlet> -->
 	<error-page>
 		<error-code>404</error-code>
 		<location>/404.html</location>
 	</error-page>
-	
 </web-app>

@@ -11,11 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import fishpond.dao.DeviceDao;
 import fishpond.entity.Device;
+import fishpond.utils.SQLUtil;
 
 @Repository("deviceDaoImpl")
 public class DeviceDaoImpl  implements DeviceDao{
 
-	private static final String SQL_FIND_ALL = "select * from device";
+	private static final String SQL_COUNT = "select count(_id) from device";
 
 	private static final String SQL_FIND_BY_FIELDS = "select _id,dtu_code,company_code,fish_pond_code,fish_pond_no,platform_id,online_status from device "
 			+ "where dtu_code = ?";
@@ -50,11 +51,6 @@ public class DeviceDaoImpl  implements DeviceDao{
 	public void add(Device device){
 		jdbcTemplate.update(SQL_INSERT_DEVICE, 
 				device.getCompanyCode(),device.getFishPondCode(),device.getFishPondNo(),device.getPlatformId());
-	}
-
-	@Override
-	public List<Device> findAll	(){
-		return jdbcTemplate.query(SQL_FIND_ALL,rowMapper);
 	}
 
 	@Override

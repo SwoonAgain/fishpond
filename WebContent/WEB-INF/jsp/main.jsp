@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" trimDirectiveWhitespaces="true" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% String baseurl = request.getContextPath();  request.setAttribute("baseurl", baseurl); /*用于引入静态地址的绝对路径*/%>
 <!doctype html>
@@ -8,7 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>主页</title>
+<title>智能鱼塘管理系统</title>
 <link rel="stylesheet" href="${baseurl }/resource/css/common.css">
 <!-- Bootstrap -->
 <link rel="stylesheet"
@@ -31,12 +30,12 @@
 			<ul class="nav nav-pills nav-stacked" role="tablist">
 				<li role="presentation"><a href="#list-online"
 					aria-controls="list-online" role="tab" data-toggle="tab"
-					data-href="${baseurl }/list-online.jhtml"> <span
+					data-href="${baseurl }/rest/list-online/1"> <span
 						class="glyphicon glyphicon-signal" aria-hidden="true"></span>&nbsp;&nbsp;在线
 				</a></li>
 				<li role="presentation"><a href="#list-all"
 					aria-controls="list-all" role="tab" data-toggle="tab"
-					data-href="${baseurl }/list-all.jhtml"> <span
+					data-href="${baseurl }/rest/list-all/1"> <span
 						class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;&nbsp;全部
 				</a></li>
 				<li role="presentation"><a href="#management"

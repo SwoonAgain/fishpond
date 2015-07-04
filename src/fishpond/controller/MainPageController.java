@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller("mainPageController")
 public class MainPageController {
 
-	@RequestMapping(value="/main",method=RequestMethod.GET)
+	@RequestMapping(value="/main")
 	public String index(ModelMap model) {
 		//TODO
 		return "main";

@@ -8,19 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import fishpond.dao.ReadableDeviceDao;
 import fishpond.entity.ReadableDevice;
+import fishpond.utils.SQLUtil;
 
 @Repository("readableDeviceDaoImpl")
 public class ReadableDeviceDaoImpl implements ReadableDeviceDao {
 	
-	private static final String SQL_FIND_ALL = "SELECT _id,dtu_code,company_name,fish_pond_name,fish_pond_no,platform_id,online_status"
-			+ " FROM view_device_c_p order by _id";
-
-	private static final String SQL_FIND_ONLINE = "SELECT _id,dtu_code,company_name,fish_pond_name,fish_pond_no,platform_id,online_status"
-			+ " FROM view_device_c_p where online_status = true order by _id";
+	private static final String SQL_BASE = "SELECT * FROM view_device_c_p";
 	
+	private static final String SQL_COUNT_BASE = "select count(_id) from view_device_c_p";
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -46,12 +46,18 @@ public class ReadableDeviceDaoImpl implements ReadableDeviceDao {
 	}
 	
 	@Override
-	public List<ReadableDevice> findAll() {
-		return jdbcTemplate.query(SQL_FIND_ALL,rowMapper);
+	public List<ReadableDevice> find(String orderBy,int begin,int count,String ...strings) {
+		String order = SQLUtil.orderClause(orderBy,"_id");
+		String where = SQLUtil.whereClause(strings);
+		String limit = SQLUtil.limitClaus(begin,count);
+		String sql = SQL_BASE+where+order+limit;
+		return jdbcTemplate.query(sql,rowMapper);
 	}
 
 	@Override
-	public List<ReadableDevice> findOnline() {
-		return jdbcTemplate.query(SQL_FIND_ONLINE,rowMapper);
+	public int getDeviceAmount(String... filters) {
+		String where = SQLUtil.whereClause(filters);
+		String sql = SQL_COUNT_BASE + where;
+		return jdbcTemplate.queryForObject(sql, Integer.class);
 	}
 }

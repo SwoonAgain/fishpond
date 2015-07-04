@@ -11,7 +11,9 @@ html, body {
 	position: fixed;
 	top: 0;
 	z-index: -999;
-	background: url(/fishPond/resource/images/backyard-pond-waterfall-on-comfortable-backyard-design-ideas-31.jpg)
+	background-image: url(/fishPond/resource/images/backyard-pond-waterfall-on-comfortable-backyard-design-ideas-31.jpg);
+	background-repeat: no-repeat;
+ 	background-size: 100%;
 }
 .form-signin {
 	width: 330px;
@@ -115,13 +117,13 @@ html, body {
 .user-li-none > a{
 	color:inherit;
 }
-#online-status-true{
+.online-status-true{
 	color:lawngreen;
 }
-#online-status-false{
+.online-status-false{
 	color:darkgray;
 }
-table > tbody > tr{
+#devices-list > tbody > tr >th,#devices-list .viewDeviceDetail{
 	cursor:pointer;
 }
 
@@ -134,7 +136,24 @@ table > tbody > tr{
 	padding: 5px 0;
 	vertical-align: middle;
 }
+.user-small-panel{
+	margin-top:8px !important;
+	margin-bottom:8px !important;
+}
+.user-small-panel .panel-heading{
+	padding:5px 15px !important;
+}
+.user-small-panel .panel-body{
+	padding:8px !important;
+}
 
+.user-small-panel .col-xs-4{
+	margin-bottom:0;
+}
+.user-small-panel .col-xs-4 input{
+	display: inline-block;
+	width:100px;
+}
 /* ==========================================================
  * Spinner
  * =========================================================*/
