@@ -6,117 +6,172 @@ public class DeviceStatus extends BaseEntity {
 	
 	private int deviceId;
 	
-	private boolean fan_A;
-	private boolean fan_B;
-	private boolean shock_A;
-	private boolean shock_B;
-	private boolean manual_stop;
-	private boolean lack_materail;
-	private boolean lack_phase;
-	private boolean shock_drug_A;
-	
-	private boolean shock_drug_B;
+	private int currentWeight;
+	private boolean fanA;
+	private boolean fanB;
+	private boolean shockA;
+	private boolean shockB;
+	private boolean manualStop;
+	private boolean lackMaterail;
+	private boolean lackPhase;
+	private boolean shockDrugA;
+	private boolean shockDrugB;
 	private boolean stir;
-	private boolean pump_drug;
-	private boolean load_materail_auger;
-	private boolean valve_auger;
+	private boolean pumpDrug;
+	private boolean loadMaterailAuger;
+	private boolean valveAuger;
 	private boolean discharge;
-	private boolean air_compressor;
-	
+	private boolean airCompressor;
 	public int getDeviceId() {
 		return deviceId;
 	}
 	public void setDeviceId(int deviceId) {
 		this.deviceId = deviceId;
 	}
-	public boolean isFan_A() {
-		return fan_A;
+	/**
+	 * 当前重量
+	 */
+	public int getCurrentWeight() {
+		return currentWeight;
 	}
-	public void setFan_A(boolean fan_A) {
-		this.fan_A = fan_A;
+	public void setCurrentWeight(int currentWeight) {
+		this.currentWeight = currentWeight;
 	}
-	public boolean isFan_B() {
-		return fan_B;
+	/**
+	 * A风机
+	 */
+	public boolean isFanA() {
+		return fanA;
 	}
-	public void setFan_B(boolean fan_B) {
-		this.fan_B = fan_B;
+	public void setFanA(boolean fanA) {
+		this.fanA = fanA;
 	}
-	public boolean isShock_A() {
-		return shock_A;
+	/**
+	 * B风机
+	 */
+	public boolean isFanB() {
+		return fanB;
 	}
-	public void setShock_A(boolean shock_A) {
-		this.shock_A = shock_A;
+	public void setFanB(boolean fanB) {
+		this.fanB = fanB;
 	}
-	public boolean isShock_B() {
-		return shock_B;
+	/**
+	 * A振动
+	 */
+	public boolean isShockA() {
+		return shockA;
 	}
-	public void setShock_B(boolean shock_B) {
-		this.shock_B = shock_B;
+	public void setShockA(boolean shockA) {
+		this.shockA = shockA;
 	}
-	public boolean isManual_stop() {
-		return manual_stop;
+	/**
+	 * B振动
+	 */
+	public boolean isShockB() {
+		return shockB;
 	}
-	public void setManual_stop(boolean manual_stop) {
-		this.manual_stop = manual_stop;
+	public void setShockB(boolean shockB) {
+		this.shockB = shockB;
 	}
-	public boolean isLack_materail() {
-		return lack_materail;
+	/**
+	 * 手动停止
+	 */
+	public boolean isManualStop() {
+		return manualStop;
 	}
-	public void setLack_materail(boolean lack_materail) {
-		this.lack_materail = lack_materail;
+	public void setManualStop(boolean manualStop) {
+		this.manualStop = manualStop;
 	}
-	public boolean isLack_phase() {
-		return lack_phase;
+	/**
+	 * 缺料
+	 */
+	public boolean isLackMaterail() {
+		return lackMaterail;
 	}
-	public void setLack_phase(boolean lack_phase) {
-		this.lack_phase = lack_phase;
+	public void setLackMaterail(boolean lackMaterail) {
+		this.lackMaterail = lackMaterail;
 	}
-	public boolean isShock_drug_A() {
-		return shock_drug_A;
+	/**
+	 *缺相
+	 */
+	public boolean isLackPhase() {
+		return lackPhase;
 	}
-	public void setShock_drug_A(boolean shock_drug_A) {
-		this.shock_drug_A = shock_drug_A;
+	public void setLackPhase(boolean lackPhase) {
+		this.lackPhase = lackPhase;
 	}
-	public boolean isShock_drug_B() {
-		return shock_drug_B;
+	/**
+	 * A药振
+	 */
+	public boolean isShockDrugA() {
+		return shockDrugA;
 	}
-	public void setShock_drug_B(boolean shock_drug_B) {
-		this.shock_drug_B = shock_drug_B;
+	public void setShockDrugA(boolean shockDrugA) {
+		this.shockDrugA = shockDrugA;
 	}
+	/**
+	 *B药振
+	 */
+	public boolean isShockDrugB() {
+		return shockDrugB;
+	}
+	public void setShockDrugB(boolean shockDrugB) {
+		this.shockDrugB = shockDrugB;
+	}
+	/**
+	 * 搅拌
+	 */
 	public boolean isStir() {
 		return stir;
 	}
 	public void setStir(boolean stir) {
 		this.stir = stir;
 	}
-	public boolean isPump_drug() {
-		return pump_drug;
+	/**
+	 * 药泵
+	 */
+	public boolean isPumpDrug() {
+		return pumpDrug;
 	}
-	public void setPump_drug(boolean pump_drug) {
-		this.pump_drug = pump_drug;
+	public void setPumpDrug(boolean pumpDrug) {
+		this.pumpDrug = pumpDrug;
 	}
-	public boolean isLoad_materail_auger() {
-		return load_materail_auger;
+	/**
+	 * 上料绞龙
+	 */
+	public boolean isLoadMaterailAuger() {
+		return loadMaterailAuger;
 	}
-	public void setLoad_materail_auger(boolean load_materail_auger) {
-		this.load_materail_auger = load_materail_auger;
+	public void setLoadMaterailAuger(boolean loadMaterailAuger) {
+		this.loadMaterailAuger = loadMaterailAuger;
 	}
-	public boolean isValve_auger() {
-		return valve_auger;
+	/**
+	 * 绞阀
+	 */
+	public boolean isValveAuger() {
+		return valveAuger;
 	}
-	public void setValve_auger(boolean valve_auger) {
-		this.valve_auger = valve_auger;
+	public void setValveAuger(boolean valveAuger) {
+		this.valveAuger = valveAuger;
 	}
+	/**
+	 * 排料
+	 */
 	public boolean isDischarge() {
 		return discharge;
 	}
 	public void setDischarge(boolean discharge) {
 		this.discharge = discharge;
 	}
-	public boolean isAir_compressor() {
-		return air_compressor;
+	/**
+	 *空压机
+	 */
+	public boolean isAirCompressor() {
+		return airCompressor;
 	}
-	public void setAir_compressor(boolean air_compressor) {
-		this.air_compressor = air_compressor;
+	public void setAirCompressor(boolean airCompressor) {
+		this.airCompressor = airCompressor;
 	}
+	
+	
 }

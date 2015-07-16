@@ -192,6 +192,7 @@ $(function () {
 	updateTable = function(jQuery){
 		var url = lego.urlbase+"?sort="+lego.sort+"&filter="+lego.filter+"&value="+lego.value;
 		var devicesList = jQuery.parents(".tab-pane").find("#devices-list");
+		showProgressBar(devicesList);
 		devicesList.load( url, function( response, status, xhr ) {
 			if (status=="success"){
 				devicesList.html(response);
@@ -246,8 +247,38 @@ $(function () {
 						modalFooter.find("#modal-edit").on("click",function(){
 							inputs.removeAttr("disabled");
 						});
-						modalFooter.find("#modal-save").on("click",function(){
-							//TODO ajax save
+						var saveButton = modalFooter.find("#modal-save");
+						//parameters form submit action
+						saveButton.on("click",function(){
+							$("#edit-parameters").submit(function(e){
+								var formObj = $(this);
+								var formURL = formObj.attr("action");
+								var formData = $(this).serializeArray();
+								$.ajax({
+									url: formURL,
+									type: 'POST',
+									data:  formData,
+									success: function(data, textStatus, jqXHR){
+										if (data == true) {
+											saveButton.html("保存成功!");
+											saveButton.removeClass("btn-primary");
+											saveButton.addClass("btn-success");
+										}else{
+											alert("写入失败，请确定数据无误重试。");
+											saveButton.html("保存");
+											saveButton.removeClass("btn-primary");
+										}
+									},
+									error: function(jqXHR, textStatus, errorThrown) {
+										alert("发生未知错误，请刷新页面重试。");
+										saveButton.html("保存");
+									}          
+								});
+								e.preventDefault(); //STOP default action
+							}); 
+							$("#edit-parameters").submit(); //Submit the form
+							saveButton.html("正在保存...");
+							saveButton.attr("disabled","");
 						});
 					}
 					if(tabContent.is("#device-work-status")){

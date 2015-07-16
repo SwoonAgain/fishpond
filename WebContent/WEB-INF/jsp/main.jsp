@@ -1,3 +1,4 @@
+<%@page import="java.util.Random"%>
 <%@ page language="java" trimDirectiveWhitespaces="true" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% String baseurl = request.getContextPath();  request.setAttribute("baseurl", baseurl); /*用于引入静态地址的绝对路径*/%>
@@ -8,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>智能鱼塘管理系统</title>
-<link rel="stylesheet" href="${baseurl }/resource/css/common.css">
+<link rel="stylesheet" href="${baseurl }/resource/css/common.css?<% out.write(String.valueOf(Math.random())); %>">
 <!-- Bootstrap -->
 <link rel="stylesheet"
 	href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -72,6 +73,6 @@
 	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
 	<script
 		src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<script src="${baseurl }/resource/js/sugar.js"></script>
+	<script src="${baseurl }/resource/js/sugar.js?<% out.write(String.valueOf(Math.random())); %>"></script>
 </body>
 </html>

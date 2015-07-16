@@ -1,6 +1,5 @@
 package fishpond.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -84,7 +83,11 @@ public class DeviceController {
 	}
 
 	private int countPageAmount(int amount, int perPage) {
-		return amount%perPage == 0 ? amount/perPage : amount/perPage+1;
+		int rest = amount%perPage;
+		if (rest == 0) {
+			return amount/perPage == 0 ? 1:amount/perPage;
+		}
+		return amount/perPage+1;
 	}
 
 	private int countBegin(int page) {
@@ -95,11 +98,6 @@ public class DeviceController {
 		if (StringUtils.isEmpty(value)) {
 			filter = "";
 		}else{
-			try {
-				value = new String(value.getBytes("ISO-8859-1"),"UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
 			filter = filter+"-'"+value+"'";
 		}
 		return filter;

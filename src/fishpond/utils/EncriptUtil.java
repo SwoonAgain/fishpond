@@ -13,7 +13,7 @@ public class EncriptUtil {
 			MessageDigest digest = MessageDigest.getInstance("MD5");
 			source = SALT + source;
 			byte[] resultBytes = digest.digest(source.getBytes("utf-8"));
-			String result = ConvertUtil.bytesToHex(resultBytes);
+			String result = ConvertUtil.bytesToHexString(resultBytes);
 			return result;
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();

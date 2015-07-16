@@ -14,7 +14,15 @@ import fishpond.entity.DeviceEditParameter;
 @Repository("deviceEditParameterDaoImpl")
 public class DeviceEditParameterDaoImpl implements DeviceEditParameterDao {
 	
-	private static final String SELECTALL_COLUMN = "select * from device_edit_parameter";
+	private static final String SELECT_BASE = "select * from device_edit_parameter";
+	
+	private static final String UPDATE = "update device_edit_parameter set"
+			+ " throwing_time = ? ,interval_time=?,manual_feed_weight=?,"
+			+ "first_meal_quantity=?,first_meal_open_time=?,first_meal_close_time=?,"
+			+ "second_meal_quantity=?,second_meal_open_time=?,second_meal_close_time=?,"
+			+ "third_meal_quantity=?,third_meal_open_time=?,third_meal_close_time=?,"
+			+ "fourth_meal_quantity=?,fourth_meal_open_time=?,fourth_meal_close_time=?"
+			+ " where device_id = ?";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -51,7 +59,18 @@ public class DeviceEditParameterDaoImpl implements DeviceEditParameterDao {
 	
 	@Override
 	public DeviceEditParameter findByDeviceId(int deviceId){
-		String sql = SELECTALL_COLUMN+" where device_id = ?";
+		String sql = SELECT_BASE+" where device_id = ?";
 		return  jdbcTemplate.queryForObject(sql, rowMapper,deviceId);
+	}
+
+	@Override
+	public void update(DeviceEditParameter editParameter) {
+		jdbcTemplate.update(UPDATE, editParameter.getThrowingTime(),editParameter.getIntervalTime(),editParameter.getManualFeedWeight(),
+				editParameter.getFirstMealQuantity(),editParameter.getFirstMealOpenTime(),editParameter.getFirstMealCloseTime(),
+				editParameter.getSecondMealQuantity(),editParameter.getSecondMealOpenTime(),editParameter.getSecondMealCloseTime(),
+				editParameter.getThirdMealQuantity(),editParameter.getThirdMealOpenTime(),editParameter.getThirdMealCloseTime(),
+				editParameter.getFourthMealQuantity(),editParameter.getFourthMealOpenTime(),editParameter.getFourthMealCloseTime(),
+				editParameter.getDeviceId());
+		
 	}
 }

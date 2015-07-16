@@ -1,5 +1,8 @@
 package fishpond.app;
 
+import fishpond.app.CommandMappingHelper.CommandType;
+import fishpond.entity.Command;
+
 
 public interface CommandWriter {
 	/**
@@ -8,4 +11,6 @@ public interface CommandWriter {
 	 * @return
 	 */
 	boolean write(byte[] command);
+	
+	byte[] writeExpectResponse(byte[] command,Command commandEntity,CommandType type);
 }

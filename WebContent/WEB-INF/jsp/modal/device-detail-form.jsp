@@ -1,8 +1,8 @@
 <%@ page language="java" trimDirectiveWhitespaces="true"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<form>
-	<input type="hidden" name="deviceId" />
+<form action="${baseurl }/rest/set-parameters" method="post" id="edit-parameters">
+	<input type="hidden" name="deviceId" id="deviceId" value="${editParameter.deviceId }"/>
 	<div class="panel panel-default user-small-panel">
 		<div class="panel-heading">
 			<h3 class="panel-title">第一餐</h3>
@@ -55,7 +55,7 @@
 					<label for="secondMealCloseTime" class="control-label">关时间</label>
 					<input type="text" class="form-control"
 						id="secondMealCloseTime" name="secondMealCloseTime"
-						value="${editParameter.secondMealOpenTime }">
+						value="${editParameter.secondMealCloseTime }">
 				</div>
 			</div>
 		</div>

@@ -3,12 +3,17 @@ package fishpond.service;
 import static fishpond.app.Application.MANDATORS;
 import static fishpond.app.Application.UNKNOWN_DEVICES;
 
+import java.util.Arrays;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import fishpond.app.CommandMappingHelper;
+import fishpond.app.CommandMappingHelper.CommandType;
 import fishpond.app.CommandWriter;
 import fishpond.dao.impl.DeviceDaoImpl;
+import fishpond.entity.Command;
 import fishpond.entity.Device;
 import fishpond.server.Client;
 import fishpond.server.Client.Status;
@@ -16,24 +21,7 @@ import fishpond.utils.BytesUtil;
 import fishpond.utils.ConvertUtil;
 
 public class ClientService implements CommandWriter{
-	/*---------发送指令---------*/
-	public static final byte[] SYNC = {0x5a};
-	public static final byte[] END = {0x77};
-	/** 确认*/
-	public static final byte[] CONFIRM = {0x03};
-	/** 获取编辑参数*/
-	public static final byte[] GET_EDIT = {0x04};
-	/** 获取实时数据及系统状态*/
-	public static final byte[] GET_REAL_TIME = {0x06};
-	/** 在数据库中*/
-	public static final byte[] IN_DATABASE = {0x00};
-	/** 不在数据库中*/
-	public static final byte[] NOT_IN_DATABASE = {0x01};
-	/** 保留位*/
-	public static final byte[] KEEP = {0x00,0X00};
-	/** 校验值*/
-	public static final byte[] CHECK = {(byte) 0xff,(byte) 0xff};
-	
+
 	/*-------TAG--------*/
 	/** sync */
 	public static final byte SYNC_TAG = 0x5a;
@@ -43,10 +31,10 @@ public class ClientService implements CommandWriter{
 	public static final byte REGISTER_TAG = 0x01;
 	/** 心跳 */
 	public static final byte HEARTBEAT_TAG = 0x02;
-	/** 编辑参数*/
-	public static final byte EDIT_TAG = 0x05;
-	/**实时数据及系统状态*/
-	public static final byte REAL_TIME_TAG = 0x07;
+
+	public static final byte[] HEARTBEATorREGISTER = new byte[]{0x5a};
+	
+	private long lastHeartbeat = System.currentTimeMillis();
 
 	private DeviceDaoImpl deviceDaoImpl;
 
@@ -60,16 +48,36 @@ public class ClientService implements CommandWriter{
 
 	/**心跳状态*/
 	private boolean beat = false;
-	
-	/**同步方法是否进入进程中,必须由client线程来更新它*/
-	private boolean isProgress = false;
-	
+
+	private byte[] expect;
+	private int expectLength;
+
+	private byte[] response;
+
 	public ClientService(Client client) {
 		mClient = client;
 		deviceDaoImpl = new DeviceDaoImpl();
 		appCtx = new ClassPathXmlApplicationContext("applicationContext.xml");
 		JdbcTemplate jdbcTemplate = appCtx.getBean(JdbcTemplate.class);
 		deviceDaoImpl.setJdbcTemplate(jdbcTemplate);
+
+//		TODO check heartbeat time
+//		new Thread(){
+//			@Override
+//			public void run() {
+//				while (true) {
+//					try {
+//						Thread.sleep(5000);
+//						if ((System.currentTimeMillis() - lastHeartbeat) > 180000) {
+//							mClient.closeConnection();
+//						}
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//						return;
+//					}
+//				}
+//			};
+//		}.start();
 	}
 
 	/**
@@ -86,35 +94,11 @@ public class ClientService implements CommandWriter{
 		case HEARTBEAT_TAG :
 			handleHeartbeat(data);
 			break;
-		case EDIT_TAG :
-			handleEdit(data);
-			break;
-		case REAL_TIME_TAG :
-			handleRealTime(data);
-			break;
 		default :
 			break;
 		}
 	}
 
-	/**
-	 * 处理实时数据及DTU系统状态
-	 * @param data
-	 */
-	protected void handleRealTime(byte[] data) { //TODO 处理实时数据
-		if (data[2]== 0x00 && data.length == 6) {  //获取失败
-			
-		}
-	}
-	
-	/**
-	 * 处理编辑参数
-	 * @param data
-	 */
-	protected void handleEdit(byte[] data) { //TODO 处理编辑参数
-		
-	}
-	
 	/**
 	 * 处理收到注册包：
 	 * <br/>1、从数据库中查找注册包中包含的设备信息.
@@ -129,40 +113,34 @@ public class ClientService implements CommandWriter{
 		byte[] fishPondCodeBytes = new byte[2];
 		byte[] fishPondNoBytes = new byte[2];
 		byte[] platformIdBytes = new byte[1];
-		
+
 		BytesUtil.arrayscopy(data, 2, dtuCodeBytes,companyCodeBytes,fishPondCodeBytes,platformIdBytes);
-		
-		String dtuCodeHexStr = ConvertUtil.bytesToHex(dtuCodeBytes);
-		String companyCodeHexStr = ConvertUtil.bytesToHex(companyCodeBytes);
-		String fishPondCodeHexStr = ConvertUtil.bytesToHex(fishPondCodeBytes);
-		String fishPondNoHexStr = ConvertUtil.bytesToHex(fishPondNoBytes);
-		String platformIdHexStr = ConvertUtil.bytesToHex(platformIdBytes);
+
+		String dtuCodeHexStr = ConvertUtil.bytesToHexString(dtuCodeBytes);
+		String companyCodeHexStr = ConvertUtil.bytesToHexString(companyCodeBytes);
+		String fishPondCodeHexStr = ConvertUtil.bytesToHexString(fishPondCodeBytes);
+		String fishPondNoHexStr = ConvertUtil.bytesToHexString(fishPondNoBytes);
+		String platformIdHexStr = ConvertUtil.bytesToHexString(platformIdBytes);
 
 		Device device = new Device(dtuCodeHexStr,companyCodeHexStr, fishPondCodeHexStr, fishPondNoHexStr, platformIdHexStr);
 		//从数据库中查询
+		System.out.println("DTU_CODE:\t"+device.getDtuCode());
 		Device deviceFromDatabase = findByDtuCode(device.getDtuCode());
 		if (deviceFromDatabase != null) {
 			//持有设备
 			mDevice = deviceFromDatabase;
 			//更新状态
 			updateStatus(Status.ONLINE);
+			Thread.currentThread().setName("DTU:"+mDevice.getDtuCode());
 		}else {
 			mDevice = device;
 			mDevice.set_id(-1);
-			UNKNOWN_DEVICES.put(mDevice, this);
+			UNKNOWN_DEVICES.put(mDevice.get_id(), this);
 		}
 		registerStatus = true;
-		//写反馈命令
-		byte[] confirmCommand = BytesUtil.composeCommand(SYNC,CONFIRM
-															,dtuCodeBytes,companyCodeBytes,fishPondCodeBytes,fishPondNoBytes
-															,KEEP,CHECK,END);
-		write(confirmCommand);//设备确认
-		byte[] getEditCommand = BytesUtil.composeCommand(SYNC,GET_EDIT,NOT_IN_DATABASE
-															,CHECK,END);
-		write(getEditCommand);//获取编辑参数
 	}
-	
-	
+
+
 	/**
 	 * 获取DTU设备上的编辑参数，
 	 * @param command
@@ -172,7 +150,7 @@ public class ClientService implements CommandWriter{
 	public boolean getEditParameterFromDevice(byte[] command, long timeout) {
 		return false;
 	}
-	
+
 	/**
 	 * 默认超时5秒
 	 * @param command
@@ -181,7 +159,7 @@ public class ClientService implements CommandWriter{
 	public boolean getEditParameterFromDevice(byte[] command) {
 		return getEditParameterFromDevice(command,5000);
 	}
-	
+
 	/**
 	 * 处理收到心跳包：
 	 * <br/>1、检查注册状态
@@ -195,23 +173,23 @@ public class ClientService implements CommandWriter{
 				beat = true;
 			}else { //没有检测到注册状态，可能是服务器重启而设备没掉线，没发注册包过来而心跳包继续
 				byte[] dtuCodeBytes = new byte[3];
-				
+
 				BytesUtil.arrayscopy(data, 2, dtuCodeBytes);
-				
-				String dtuCodeHexStr = ConvertUtil.bytesToHex(dtuCodeBytes);
+
+				String dtuCodeHexStr = ConvertUtil.bytesToHexString(dtuCodeBytes);
 				Device deviceFromDatabase = findByDtuCode(dtuCodeHexStr);
 				if (deviceFromDatabase != null) { //数据库中存在，则设备已经注册进来，重新注册设备
 					reRegister(deviceFromDatabase);
 				}else {
 					mDevice = new Device(dtuCodeHexStr, "unknown", "unknown", "unknown", "unknown");
-					UNKNOWN_DEVICES.put(mDevice, this);
+					UNKNOWN_DEVICES.put(mDevice.get_id(), this);
 				}
 			}
 		}
 		beat = true;
-		write(data);
+		lastHeartbeat = System.currentTimeMillis();
 	}
-	
+
 	/**
 	 * 根据已有设备重新注册设备
 	 * @param device
@@ -222,8 +200,8 @@ public class ClientService implements CommandWriter{
 		updateStatus(Status.ONLINE);
 	}
 
-	
-	
+
+
 	private Device findByDtuCode(String dtuCode) {
 		return deviceDaoImpl.findByDtuCode(dtuCode);
 	}
@@ -239,20 +217,22 @@ public class ClientService implements CommandWriter{
 	 * @param status
 	 */
 	public void updateStatus(Client.Status status) {
-		switch (status) {
-		case ONLINE:
-			mDevice.setOnlineStatus(true);
-			deviceDaoImpl.update("update device set online_status = true where _id = "+mDevice.get_id());
-			MANDATORS.put(mDevice, this);
-			break;
-		case OFFLINE:
-			mDevice.setOnlineStatus(false);
-			deviceDaoImpl.update("update device set online_status = false where _id = "+mDevice.get_id());
-			MANDATORS.remove(mDevice);
-			UNKNOWN_DEVICES.remove(mDevice);
-			break;
-		default:
-			break;
+		if (mDevice != null) {
+			switch (status) {
+			case ONLINE:
+				mDevice.setOnlineStatus(true);
+				deviceDaoImpl.update("update device set online_status = true where _id = "+mDevice.get_id());
+				MANDATORS.put(mDevice.get_id(), this);
+				break;
+			case OFFLINE:
+				mDevice.setOnlineStatus(false);
+				deviceDaoImpl.update("update device set online_status = false where _id = "+mDevice.get_id());
+				MANDATORS.remove(mDevice.get_id());
+				UNKNOWN_DEVICES.remove(mDevice.get_id());
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
@@ -262,5 +242,50 @@ public class ClientService implements CommandWriter{
 	@Override
 	public synchronized boolean write(byte[] command) {
 		return mClient.write(command);
+	}
+
+	@Override
+	public synchronized byte[] writeExpectResponse(byte[] command, Command commandEntity,
+			CommandType type) {
+		String expt = CommandMappingHelper.expect(commandEntity, type);
+		int exptLen = CommandMappingHelper.expectLength(commandEntity, type);
+		updateExpect(ConvertUtil.hexStringToByteArray(expt),exptLen);
+		response = null;
+		mClient.write(command);
+		long begin = System.currentTimeMillis();
+		while ((System.currentTimeMillis() - begin) < 5000) {
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			if (response != null) {
+				updateExpect(HEARTBEATorREGISTER, 0);
+				return response;
+			}
+		}
+		updateExpect(HEARTBEATorREGISTER, 0);
+		return null;
+	}
+
+	public synchronized void updateExpect(byte[] expect,int expectLength){
+		this.expect = expect;
+		this.expectLength = expectLength;
+	}
+
+	public byte[] getExpect() {
+		if (expect == null) {
+			return HEARTBEATorREGISTER;
+		}
+		return expect;
+	}
+
+	public int getExpectLength(){
+		return expectLength;
+	}
+
+	public void setResponse(byte[] response) {
+		this.response = response;
+		lastHeartbeat = System.currentTimeMillis();
 	}
 }

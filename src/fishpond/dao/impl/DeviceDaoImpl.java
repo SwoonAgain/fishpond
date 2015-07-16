@@ -2,7 +2,6 @@ package fishpond.dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,15 +10,11 @@ import org.springframework.stereotype.Repository;
 
 import fishpond.dao.DeviceDao;
 import fishpond.entity.Device;
-import fishpond.utils.SQLUtil;
 
 @Repository("deviceDaoImpl")
 public class DeviceDaoImpl  implements DeviceDao{
 
-	private static final String SQL_COUNT = "select count(_id) from device";
-
-	private static final String SQL_FIND_BY_FIELDS = "select _id,dtu_code,company_code,fish_pond_code,fish_pond_no,platform_id,online_status from device "
-			+ "where dtu_code = ?";
+	private static final String SQL_FIND_BY_FIELDS = "select * from device where dtu_code = ?";
 
 	private static final String SQL_INSERT_DEVICE = "insert into device ("
 			+ "company_code,fish_pond_code,fish_pond_no,platform_id) values (?,?,?,?)";

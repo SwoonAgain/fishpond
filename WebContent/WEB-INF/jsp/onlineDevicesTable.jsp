@@ -18,7 +18,7 @@
 			<th>鱼塘名称</th>
 			<th>鱼塘编号</th>
 			<th>平台号</th>
-			<th>状态</th>
+			<th>实时重量</th>
 			<th>查看</th>
 		</tr>
 	</thead>
@@ -31,8 +31,7 @@
 				<td>${onlinedevice.fishPondName}</td>
 				<td>${onlinedevice.fishPondNo}</td>
 				<td>${onlinedevice.platformId}</td>
-				<td class="online-status-${onlinedevice.onlineStatus}"><span
-					class="glyphicon glyphicon-certificate" aria-hidden="true"></span></td>
+				<td><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></td>
 				<td class="viewDeviceDetail"  data-toggle="modal" data-target="#device-detail-modal" data-href="${url }/rest/device-detail/${onlinedevice._id}"><span
 					class="glyphicon glyphicon-eye-open user-glyphicon-orange"
 					aria-hidden="true"></span><span

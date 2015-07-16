@@ -17,10 +17,6 @@ import fishpond.utils.PropertiesUtil;
 public class Server extends HttpServlet{
 
 	private static final long serialVersionUID = 7158844308097516029L;
-	/**
-	 * 客户端连接线程集合
-	 */
-	public static final HashMap<Client,Thread> CLIENT_THREADS = new HashMap<Client, Thread>();
 
 	@Override
 	public void init() throws ServletException {
@@ -78,7 +74,6 @@ public class Server extends HttpServlet{
 
 		@Override
 		public void run() {
-			CLIENT_THREADS.put(mClient, this);
 			mClient.work();
 		}
 	}
