@@ -45,7 +45,9 @@
 	</div>
 	<!-- /.container-fluid -->
 </nav>
+<div class="wrap-table">
 <%@ include file="onlineDevicesTable.jsp" %>
+</div>
 <nav id="paging">
 	<ul class="pagination" data-amount>
 		<li><a href="#" aria-label="Previous"> <span

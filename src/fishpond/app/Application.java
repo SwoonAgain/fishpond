@@ -22,6 +22,8 @@ public class Application {
 
 	/**
 	 * 所有注册设备
+	 * Integer deviceId
+	 * CommandWriter commandWriter
 	 */
 	public static final Map<Integer, CommandWriter> MANDATORS =
 			Collections.synchronizedMap(new HashMap<Integer, CommandWriter>());
@@ -35,22 +37,4 @@ public class Application {
 	public static CommandWriter getCommandWriterByDeviceId(int deviceId){
 		return MANDATORS.get(deviceId);
 	}
-	
-	public static final Map<String,Command> getCommands(){
-		if (commands == null) {
-			commands = new HashMap<String, Command>();
-			appCtx = new ClassPathXmlApplicationContext("applicationContext.xml");
-			JdbcTemplate jdbcTemplate = appCtx.getBean(JdbcTemplate.class);
-			CommandDaoImpl commandDaoImpl = new CommandDaoImpl();
-			commandDaoImpl.setJdbcTemplate(jdbcTemplate);
-			List<Command> commandList = commandDaoImpl.findAll();
-			for (Command command : commandList) {
-				commands.put(command.getParameterName(), command);
-			}
-		} 
-		return commands;
-	}
-	
-	private static Map<String,Command> commands;
-	private static ApplicationContext appCtx;
 }

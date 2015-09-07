@@ -1,5 +1,7 @@
 package fishpond.entity;
 
+import java.util.Date;
+
 public class DeviceStatus extends BaseEntity {
 
 	private static final long serialVersionUID = -8541227944299250080L;
@@ -7,6 +9,9 @@ public class DeviceStatus extends BaseEntity {
 	private int deviceId;
 	
 	private int currentWeight;
+	private int dissolvedOxygen;
+	private int waterTemperature;
+	private Date updateTime;
 	private boolean fanA;
 	private boolean fanB;
 	private boolean shockA;
@@ -36,6 +41,33 @@ public class DeviceStatus extends BaseEntity {
 	}
 	public void setCurrentWeight(int currentWeight) {
 		this.currentWeight = currentWeight;
+	}
+	/**
+	 * 溶氧量
+	 */
+	public int getDissolvedOxygen() {
+		return dissolvedOxygen;
+	}
+	public void setDissolvedOxygen(int dissolvedOxygen) {
+		this.dissolvedOxygen = dissolvedOxygen;
+	}
+	/**
+	 * 水温
+	 */
+	public int getWaterTemperature() {
+		return waterTemperature;
+	}
+	public void setWaterTemperature(int waterTemperature) {
+		this.waterTemperature = waterTemperature;
+	}
+	/**
+	 * 更新时间
+	 */
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 	/**
 	 * A风机

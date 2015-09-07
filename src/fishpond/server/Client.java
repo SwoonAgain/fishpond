@@ -1,16 +1,15 @@
 package fishpond.server;
 
-import static fishpond.service.ClientService.END_TAG;
-import static fishpond.service.ClientService.HEARTBEATorREGISTER;
-import static fishpond.service.ClientService.SYNC_TAG;
+import static fishpond.server.ClientService.END_TAG;
+import static fishpond.server.ClientService.HEARTBEATorREGISTER;
+import static fishpond.server.ClientService.SYNC_TAG;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.Arrays;
-
-import fishpond.service.ClientService;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 
 public class Client{
 	/**
@@ -89,8 +88,9 @@ public class Client{
 		}
 	}
 
-	public void work(){
+	protected void work(){
 		try {
+			mSocket.setSoTimeout(150000); //150秒，关联心跳包
 			mInputStream = mSocket.getInputStream();
 			int data = 0;
 			while( !Thread.currentThread().isInterrupted()&& data!=-1){
@@ -104,16 +104,14 @@ public class Client{
 					fullBucket = false;
 				}
 			}
-		} catch (Exception e) {
-//			System.out.println("读错误！");
+		} catch (IOException e) {
 			e.printStackTrace();
-
-		} finally {
+		}finally{
 			closeConnection();
 		}
 	}
 
-	public void closeConnection(){
+	protected void closeConnection(){
 		try {
 			if (mInputStream != null) {
 				mInputStream.close();
@@ -129,22 +127,21 @@ public class Client{
 		}finally{
 			mService.updateStatus(Status.OFFLINE);
 			Thread thread = Thread.currentThread();
-			if (thread.getName().indexOf("DTU") != -1) {
-				System.out.println(thread.getName() + "\t线程销毁");
-			}
-			thread.interrupt();
+			System.out.println(thread.getName() + "\t线程销毁");
 		}
 	}
 
-	public boolean write(byte[] command){
+	protected boolean write(byte[] command){
 		if (command != null) {
 			try {
 				mOutputStream = mSocket.getOutputStream();
 				mOutputStream.write(command);
 				return true;
 			} catch (IOException e) {
-//				System.out.println("写错误！");
 				e.printStackTrace();
+				if (e instanceof SocketException) {
+					closeConnection();
+				}
 			}
 		}
 		return false;

@@ -14,6 +14,30 @@ public class ConvertUtil {
 	    return new String(hexChars);
 	}
 	
+	/**
+	 * 长度不足前面补0，超过丢弃后面位
+	 * @param bytes
+	 * @param length
+	 * @return
+	 */
+	public static String fixedLengthBytesToHexString(byte[] bytes,int length) {
+		StringBuilder sb = new StringBuilder();
+	    String tempStr = bytesToHexString(bytes);
+	    int tempStrLength = tempStr.length();
+	    if (tempStrLength < length) {
+			
+			for (int i = 0; i < length - tempStrLength ; i++) {
+				sb.append("0");
+			}
+			sb.append(tempStr);
+			return sb.toString();
+		}else if (tempStrLength == length) {
+			return tempStr;
+		}else{
+			return tempStr.substring(0, length);
+		}
+	}
+	
 	public static String byteToHexString(byte b) {
 		return String.format("%02X", b) ;
 	}

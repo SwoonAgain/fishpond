@@ -3,7 +3,6 @@ package fishpond.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import fishpond.entity.DeviceStatus;
 import fishpond.entity.ReadableDevice;
 import fishpond.service.DeviceService;
 
@@ -26,27 +26,31 @@ public class DeviceController {
 	private DeviceService deviceService;
 
 	@RequestMapping(value="/list-online/{page}",method=RequestMethod.GET)
-	public String listOnlineDevice(@PathVariable Integer page,HttpServletRequest request,ModelMap model) {
+	public String listOnlineDevice(@PathVariable Integer page,ModelMap model) {
 		List<ReadableDevice> onlinedevices = deviceService.viewOnlineDevice(null, countBegin(1), PER_PAGE_COUNT);
+		List<DeviceStatus> status = deviceService.getStatus(onlinedevices);
 		int onlineDevicesAmoount = deviceService.onlineDeviceAmount();
 		int pageAmount = countPageAmount(onlineDevicesAmoount, PER_PAGE_COUNT);
-		request.getSession().setAttribute("pageAmount", pageAmount);
+		model.addAttribute("onPage", page);
+		model.addAttribute("pageAmount", pageAmount);
 		model.addAttribute("onlinedevices", onlinedevices);
+		model.addAttribute("status", status);
 		return "list-online";
 	}
 
 	@RequestMapping(value="/list-all/{page}",method=RequestMethod.GET)
-	public String listAllDevice(@PathVariable Integer page,HttpServletRequest request,ModelMap model) {
+	public String listAllDevice(@PathVariable Integer page,ModelMap model) {
 		List<ReadableDevice> alldevices = deviceService.viewAllDevice(null, countBegin(1), PER_PAGE_COUNT);
 		int allDevicesAmoount = deviceService.allDeviceAmount();
 		int pageAmount = countPageAmount(allDevicesAmoount, PER_PAGE_COUNT);
-		request.getSession().setAttribute("pageAmount", pageAmount);
+		model.addAttribute("onPage", page);
+		model.addAttribute("pageAmount", pageAmount);
 		model.addAttribute("alldevices", alldevices);
 		return "list-all";
 	}
 
 	@RequestMapping(value="/list-online/table/{page}",method=RequestMethod.GET)
-	public String listOnlineDeviceTable(@PathVariable Integer page,HttpServletRequest request,
+	public String listOnlineDeviceTable(@PathVariable Integer page,
 			@RequestParam(value="sort", required=false) String sort,
 			@RequestParam(value="filter", required=false) String filter,
 			@RequestParam(value="value", required=false) String value,
@@ -55,13 +59,14 @@ public class DeviceController {
 		List<ReadableDevice> onlinedevices = deviceService.viewOnlineDevice(sort,countBegin(page),PER_PAGE_COUNT,filter);
 		int devicesAmoount = deviceService.onlineDeviceAmount(filter);
 		int pageAmount = countPageAmount(devicesAmoount, PER_PAGE_COUNT);
-		request.getSession().setAttribute("pageAmount", pageAmount);
+		model.addAttribute("onPage", page);
+		model.addAttribute("pageAmount", pageAmount);
 		model.addAttribute("onlinedevices", onlinedevices);
 		return "onlineDevicesTable";
 	}
 
 	@RequestMapping(value="/list-all/table/{page}",method=RequestMethod.GET)
-	public String listAllDeviceTable(@PathVariable Integer page,HttpServletRequest request,
+	public String listAllDeviceTable(@PathVariable Integer page,
 			@RequestParam(value="sort", required=false) String sort,
 			@RequestParam(value="filter", required=false) String filter,
 			@RequestParam(value="value", required=false) String value,
@@ -70,16 +75,24 @@ public class DeviceController {
 		List<ReadableDevice> alldevices = deviceService.viewAllDevice(sort,countBegin(page),PER_PAGE_COUNT,filter);
 		int devicesAmoount = deviceService.deviceAmount(filter);
 		int pageAmount = countPageAmount(devicesAmoount, PER_PAGE_COUNT);
-		request.getSession().setAttribute("pageAmount", pageAmount);
+		model.addAttribute("onPage", page);
+		model.addAttribute("pageAmount", pageAmount);
 		model.addAttribute("alldevices", alldevices);
 		return "allDevicesTable";
 	}
-
-	@RequestMapping(value="/*/table/{onPage}/update-page-amount",method=RequestMethod.GET)
+	
+	@RequestMapping(value="/list-online/**/refresh",method=RequestMethod.POST)
 	@ResponseBody
-	public String updatePageAmount(@PathVariable Integer onPage,HttpServletRequest request) {
-		int pageAmount = (Integer) request.getSession().getAttribute("pageAmount");
-		return "{"+"\"onPage\":\""+onPage+"\",\"pageAmount\":\""+pageAmount+"\"}";
+	public List<DeviceStatus> refreshStatus(@RequestParam(value="ids[]") String[] ids){
+		List<DeviceStatus> status = deviceService.refreshStatus(ids);
+		return status;
+	}
+	
+	@RequestMapping(value="/list-all/**/refresh",method=RequestMethod.POST)
+	@ResponseBody
+	public List<DeviceStatus> refreshStatusTest(@RequestParam(value="ids[]") String[] ids){
+		List<DeviceStatus> status = deviceService.refreshStatus(ids);
+		return status;
 	}
 
 	private int countPageAmount(int amount, int perPage) {

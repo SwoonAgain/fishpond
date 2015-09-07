@@ -73,10 +73,9 @@ $(function () {
 	}
 
 	//paging
-	paging = function(data){
-		var info = $.parseJSON(data);
-		var onPage = info.onPage;
-		var pageAmount = info.pageAmount;
+	updatePaging = function(){
+		var onPage = $("#onPage").html();
+		var pageAmount = $("#pageAmount").html();
 		var pagingul = $("#paging ul");
 		onPage = parseInt(onPage);
 		pageAmount = parseInt(pageAmount);
@@ -114,7 +113,6 @@ $(function () {
 			inflatePaging(onPage -2,onPage +2);
 		}
 		pagingul.append(nextButton);
-		//binding page event
 		//binding page event
 		pagingul.find("li").on("click",function(){
 			var li = $(this);
@@ -178,17 +176,6 @@ $(function () {
 		});
 	}
 
-	updatePaging = function(){
-		try{
-			$.get( lego.urlbase+"update-page-amount")
-			.done(function( data ) {
-				paging(data);
-			});
-		}catch(e){
-			console.log(e);
-		}
-	}
-
 	updateTable = function(jQuery){
 		var url = lego.urlbase+"?sort="+lego.sort+"&filter="+lego.filter+"&value="+lego.value;
 		var devicesList = jQuery.parents(".tab-pane").find("#devices-list");
@@ -223,6 +210,10 @@ $(function () {
 					updatePaging();
 					bindSortEvent();
 					bindFilterEvent();
+				}else if(elementID == "#management"){
+					$("#managementTabs").tabs({
+						  active: 0});
+					bindSelectEvent();
 				}
 			}else{
 				jQuery.html("<h2>"+"远程服务器没有响应: <br/>" + xhr.status + " " + xhr.statusText+"</h2>");
@@ -235,15 +226,11 @@ $(function () {
 		modal.load( href, function( response, status, xhr ) {
 			if (status=="success"){
 				modal.html(response);
-				$('#device-detail ul li a').on('shown.bs.tab', function (event) {
-					var currTab = $(event.target); // newly activated tab
-					var elementID = "#"+currTab.attr("aria-controls"); //内容元素的id
-					var tabContent = $(elementID);
-					if(tabContent.is("#device-parameters")){
-						inputs = tabContent.find("input");
+					var form = $("#edit-parameters");
+					if(form.length){
+						inputs = form.find("input");
 						inputs.attr("disabled","");
-						var modalFooter = tabContent.parents(".modal-content").find(".modal-footer");
-						modalFooter.find(".btn-primary").removeClass("hidden");
+						var modalFooter = form.parents(".modal-content").find(".modal-footer");
 						modalFooter.find("#modal-edit").on("click",function(){
 							inputs.removeAttr("disabled");
 						});
@@ -281,11 +268,6 @@ $(function () {
 							saveButton.attr("disabled","");
 						});
 					}
-					if(tabContent.is("#device-work-status")){
-						var modalFooter = tabContent.parents(".modal-content").find(".modal-footer");
-						modalFooter.find(".btn-primary").addClass("hidden");
-					}
-				});
 			}else{
 				jQuery.html("<h2>"+"远程服务器没有响应: <br/>" + xhr.status + " " + xhr.statusText+"</h2>");
 			}
@@ -306,5 +288,54 @@ $(function () {
 	//初始加载
 	$('#nav a:first').tab('show');
 
+	dateFormat = function(date){
+		var year = date.getFullYear();
+		var month = date.getMonth();
+		month += 1;
+		if (month < 10) {
+			month = '0'+month;
+		}
+		var day = date.getDate();
+		var hour = date.getHours();
+		var minute = date.getMinutes();
+		if (minute < 10) {
+			minute = '0'+minute;
+		}
+		return hour+":"+minute+" "+month+"/"+day+"/"+year;
+	}
+
+	fadeUpdate = function(jQuery,html){
+		jQuery.fadeOut("slow", function() {
+			$(this).html(html).fadeIn("slow");
+		});
+	}
+
+	setInterval(function(){
+		var table = $("#devices-list");
+		if (table.length) {
+			if(table.parents("#list-online").length){
+				var coco = table.find("tbody tr");
+				var idArray = [];
+				coco.each(function(index){
+					idArray[index] = $(this).data("id");
+				});
+				$.ajax({
+					url:lego.urlbase+"refresh",
+					data:{ids:idArray},
+					type:'POST'
+				}).done(function(data){
+					for (var int = 0; int < data.length; int++) {
+						var tds = $(coco[int]).children();
+						fadeUpdate($(tds[4]),data[int].currentWeight);
+						fadeUpdate($(tds[5]),data[int].waterTemperature);
+						fadeUpdate($(tds[6]),data[int].dissolvedOxygen);
+						var date = new Date(data[int].updateTime);
+						var formatedDate = dateFormat(date);
+						fadeUpdate($(tds[7]),formatedDate);
+					}
+				});
+			}
+		}
+	},10000);
 
 })

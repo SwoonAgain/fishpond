@@ -67,10 +67,6 @@ html, body {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
-
-#nav{
-	min-width:200px;
-}
 #board{
 	min-width:800px;
 }
@@ -85,9 +81,11 @@ html, body {
 	padding-bottom: 15px;
 	padding-top: 15px;
 	margin-top: 10px;
+	background: #fbfbfb;
 }
 .nav-main{
-	width: 15%;
+	width: 130px;
+	margin-right: 15px;
 	padding-right: 15px;
 	padding-left: 15px;
 	padding-top:8px;
@@ -97,10 +95,12 @@ html, body {
 	border-radius: 4px;
 }
 .user-panel {
-	/* border-left: 1px solid #CCC; */
-	padding-left: 15px;
-	width: 82%;
+	padding: 15px;
+	width: 990px;
 	height:100%;
+	background:#FFFFFF;
+	border: 1px solid #e7e7e7;
+	border-radius: 4px;
 }
 .navbar-btn-group {
 	padding-top: 8px;
@@ -122,6 +122,9 @@ html, body {
 }
 .online-status-false{
 	color:darkgray;
+}
+.wrap-table{
+	min-height: 408px;
 }
 #devices-list > tbody > tr >th,#devices-list .viewDeviceDetail{
 	cursor:pointer;
@@ -153,6 +156,14 @@ html, body {
 .user-small-panel .col-xs-4 input{
 	display: inline-block;
 	width:100px;
+}
+#userList{
+	height:600px;
+	overflow:auto;
+	border: 1px solid #e7e7e7;
+}
+.actions{
+	padding:11px 0 8px;
 }
 /* ==========================================================
  * Spinner

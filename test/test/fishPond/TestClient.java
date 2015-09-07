@@ -1,8 +1,8 @@
 package test.fishPond;
 
-import static fishpond.service.ClientService.END_TAG;
-import static fishpond.service.ClientService.HEARTBEATorREGISTER;
-import static fishpond.service.ClientService.SYNC_TAG;
+import static fishpond.server.ClientService.END_TAG;
+import static fishpond.server.ClientService.HEARTBEATorREGISTER;
+import static fishpond.server.ClientService.SYNC_TAG;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package fishpond.service;
+package fishpond.server;
 
 import static fishpond.app.Application.MANDATORS;
 import static fishpond.app.Application.UNKNOWN_DEVICES;
@@ -15,10 +15,10 @@ import fishpond.app.CommandWriter;
 import fishpond.dao.impl.DeviceDaoImpl;
 import fishpond.entity.Command;
 import fishpond.entity.Device;
-import fishpond.server.Client;
 import fishpond.server.Client.Status;
 import fishpond.utils.BytesUtil;
 import fishpond.utils.ConvertUtil;
+import fishpond.utils.SpringApplicationContextProvider;
 
 public class ClientService implements CommandWriter{
 
@@ -34,14 +34,11 @@ public class ClientService implements CommandWriter{
 
 	public static final byte[] HEARTBEATorREGISTER = new byte[]{0x5a};
 	
-	private long lastHeartbeat = System.currentTimeMillis();
-
 	private DeviceDaoImpl deviceDaoImpl;
 
 	/**持有的设备，每一个线程对应一个client,service同时也持有一个device*/
 	private Device mDevice;
 	private Client mClient;
-	private ApplicationContext appCtx; 
 
 	/**注册状态，服务器掉线重新收到心跳包而没收到注册包，注册状态将为false*/
 	private boolean registerStatus = false;
@@ -57,27 +54,8 @@ public class ClientService implements CommandWriter{
 	public ClientService(Client client) {
 		mClient = client;
 		deviceDaoImpl = new DeviceDaoImpl();
-		appCtx = new ClassPathXmlApplicationContext("applicationContext.xml");
-		JdbcTemplate jdbcTemplate = appCtx.getBean(JdbcTemplate.class);
+		JdbcTemplate jdbcTemplate = SpringApplicationContextProvider.getApplicationContext().getBean(JdbcTemplate.class);
 		deviceDaoImpl.setJdbcTemplate(jdbcTemplate);
-
-//		TODO check heartbeat time
-//		new Thread(){
-//			@Override
-//			public void run() {
-//				while (true) {
-//					try {
-//						Thread.sleep(5000);
-//						if ((System.currentTimeMillis() - lastHeartbeat) > 180000) {
-//							mClient.closeConnection();
-//						}
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//						return;
-//					}
-//				}
-//			};
-//		}.start();
 	}
 
 	/**
@@ -114,7 +92,7 @@ public class ClientService implements CommandWriter{
 		byte[] fishPondNoBytes = new byte[2];
 		byte[] platformIdBytes = new byte[1];
 
-		BytesUtil.arrayscopy(data, 2, dtuCodeBytes,companyCodeBytes,fishPondCodeBytes,platformIdBytes);
+		BytesUtil.arrayscopy(data, 2, dtuCodeBytes,companyCodeBytes,fishPondCodeBytes,fishPondNoBytes,platformIdBytes);
 
 		String dtuCodeHexStr = ConvertUtil.bytesToHexString(dtuCodeBytes);
 		String companyCodeHexStr = ConvertUtil.bytesToHexString(companyCodeBytes);
@@ -187,7 +165,6 @@ public class ClientService implements CommandWriter{
 			}
 		}
 		beat = true;
-		lastHeartbeat = System.currentTimeMillis();
 	}
 
 	/**
@@ -251,9 +228,9 @@ public class ClientService implements CommandWriter{
 		int exptLen = CommandMappingHelper.expectLength(commandEntity, type);
 		updateExpect(ConvertUtil.hexStringToByteArray(expt),exptLen);
 		response = null;
-		mClient.write(command);
+		boolean isWriten = mClient.write(command);
 		long begin = System.currentTimeMillis();
-		while ((System.currentTimeMillis() - begin) < 5000) {
+		while (isWriten && (System.currentTimeMillis() - begin) < 5000) {
 			try {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {
@@ -286,6 +263,5 @@ public class ClientService implements CommandWriter{
 
 	public void setResponse(byte[] response) {
 		this.response = response;
-		lastHeartbeat = System.currentTimeMillis();
 	}
 }

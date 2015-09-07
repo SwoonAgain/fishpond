@@ -2,6 +2,7 @@ package fishpond.service;
 
 import java.util.List;
 
+import fishpond.entity.DeviceStatus;
 import fishpond.entity.ReadableDevice;
 
 public interface DeviceService {
@@ -52,4 +53,8 @@ public interface DeviceService {
 	int deviceAmount(String filter);
 
 	int onlineDeviceAmount(String filter);
+
+	List<DeviceStatus> getStatus(List<ReadableDevice> onlinedevices);
+
+	List<DeviceStatus> refreshStatus(String[] ids);
 }

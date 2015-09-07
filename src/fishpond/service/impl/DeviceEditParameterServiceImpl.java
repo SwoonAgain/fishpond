@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import fishpond.app.Application;
 import fishpond.app.CommandWriter;
-import fishpond.app.DeviceEditParameterHelper;
-import fishpond.app.DeviceEditParameterHelper.DeviceStatusException;
+import fishpond.app.DeviceHelper;
+import fishpond.app.DeviceHelper.DeviceReadException;
 import fishpond.dao.DeviceEditParameterDao;
 import fishpond.entity.DeviceEditParameter;
 import fishpond.entity.DeviceStatus;
@@ -29,7 +29,7 @@ public class DeviceEditParameterServiceImpl implements
 	public boolean saveParameters(DeviceEditParameter editParameter) {
 		CommandWriter commandWriter = Application.getCommandWriterByDeviceId(editParameter.getDeviceId());
 		DeviceEditParameter fromDtabase = deviceEditParameterDao.findByDeviceId(editParameter.getDeviceId());
-		boolean isSuccess = DeviceEditParameterHelper.writeToDevice(commandWriter,editParameter,fromDtabase);
+		boolean isSuccess = DeviceHelper.writeToDevice(commandWriter,editParameter,fromDtabase);
 		if (isSuccess) {
 			deviceEditParameterDao.update(editParameter);
 		}
@@ -40,8 +40,8 @@ public class DeviceEditParameterServiceImpl implements
 	public DeviceStatus getDeviceStatus(Integer _id) {
 		CommandWriter commandWriter = Application.getCommandWriterByDeviceId(_id);
 		try {
-			return DeviceEditParameterHelper.requestDeviceStatus(_id,commandWriter);
-		} catch (DeviceStatusException e) {
+			return DeviceHelper.requestDeviceStatus(_id,commandWriter);
+		} catch (DeviceReadException e) {
 			System.out.println(e.getMessage());
 		}
 		return null;

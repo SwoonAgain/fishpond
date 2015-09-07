@@ -6,8 +6,25 @@
 <head>
 <meta charset="UTF-8">
 <title>错误</title>
+<style type="text/css">
+.err{
+	position:relative;
+	width:300px;
+	margin:30px auto;
+}
+.err p{
+	padding:15px;
+	color:#a94442;
+	background-color:#f2dede;
+	border:1px solid transparent;
+	border-color:#ebccd1;
+	border-radius:4px;
+}
+</style>
 </head>
 <body>
-	服务器开了个小差...
+	<div class = "err">
+    <p>服务器开了个小差...</p>
+    </div>
 </body>
 </html>

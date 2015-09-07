@@ -22,7 +22,7 @@
 	</thead>
 	<tbody>
 		<c:forEach var="device" items="${alldevices}" varStatus="i">
-			<tr>
+			<tr data-id="${device._id }">
 				<th scope="row"><span class="glyphicon glyphicon-unchecked"
 					aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;${i.count}</th>
 				<td>${device.companyName}</td>
@@ -35,3 +35,4 @@
 		</c:forEach>
 	</tbody>
 </table>
+<div class = "hidden"><span id="onPage">${onPage }</span><span id="pageAmount">${ pageAmount}</span></div>

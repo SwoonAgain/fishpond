@@ -19,13 +19,18 @@ public class DeviceDetailController {
 	@Resource(name = "deviceEditParameterServiceImpl")
 	private DeviceEditParameterService deviceEditParameterService;
 
-	@RequestMapping(value = "/device-detail/{_id}",method = RequestMethod.GET)
-	public String getDeviceEditParameter(@PathVariable Integer _id,ModelMap model) {
-		DeviceEditParameter dep = deviceEditParameterService.findById(_id);
+	@RequestMapping(value = "/status-detail/{_id}",method = RequestMethod.GET)
+	public String getDeviceStatus(@PathVariable Integer _id,ModelMap model) {
 		DeviceStatus status = deviceEditParameterService.getDeviceStatus(_id);
 		model.addAttribute("status", status);
+		return "modal/status-detail-modal";
+	}
+	
+	@RequestMapping(value = "/setting-detail/{_id}",method = RequestMethod.GET)
+	public String getDeviceEditParameter(@PathVariable Integer _id,ModelMap model) {
+		DeviceEditParameter dep = deviceEditParameterService.findById(_id);
 		model.addAttribute("editParameter", dep);
-		return "modal/device-detail-modal";
+		return "modal/setting-detail-modal";
 	}
 	
 	@RequestMapping(value = "/set-parameters",method = RequestMethod.POST)

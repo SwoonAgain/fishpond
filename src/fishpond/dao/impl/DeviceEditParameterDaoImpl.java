@@ -71,6 +71,5 @@ public class DeviceEditParameterDaoImpl implements DeviceEditParameterDao {
 				editParameter.getThirdMealQuantity(),editParameter.getThirdMealOpenTime(),editParameter.getThirdMealCloseTime(),
 				editParameter.getFourthMealQuantity(),editParameter.getFourthMealOpenTime(),editParameter.getFourthMealCloseTime(),
 				editParameter.getDeviceId());
-		
 	}
 }
