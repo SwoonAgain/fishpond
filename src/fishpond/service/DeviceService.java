@@ -23,7 +23,7 @@ public interface DeviceService {
 	 * @param strings
 	 * @return
 	 */
-	List<ReadableDevice> viewAllDevice(String orderBy,int begin,int count,Map<String,String> filters);
+	List<ReadableDevice> viewAllDevice(String orderBy,int begin,int count,Map<String,Object> filters);
 	
 	/**
 	 * @param orderBy
@@ -40,7 +40,7 @@ public interface DeviceService {
 	 * @param strings
 	 * @return
 	 */
-	List<ReadableDevice> viewOnlineDevice(String orderBy,int begin,int count,Map<String,String> filters);
+	List<ReadableDevice> viewOnlineDevice(String orderBy,int begin,int count,Map<String,Object> filters);
 
 	int onlineDeviceAmount();
 
@@ -50,7 +50,7 @@ public interface DeviceService {
 
 	List<DeviceStatus> refreshStatus(String[] ids);
 
-	int deviceAmount(Map<String, String> filters);
+	int deviceAmount(Map<String, Object> filters);
 
-	int onlineDeviceAmount(Map<String, String> filters);
+	int onlineDeviceAmount(Map<String, Object> filters);
 }

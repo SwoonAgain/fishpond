@@ -34,28 +34,28 @@ public class DeviceServiceImpl implements DeviceService {
 	}
 	@Override
 	public List<ReadableDevice> viewAllDevice(String orderBy, int begin,
-			int count, Map<String,String> filters) {
+			int count, Map<String,Object> filters) {
 		return readableDeviceDao.find(orderBy,begin,count,filters);
 	}
 
 	@Override
 	public List<ReadableDevice> viewOnlineDevice(String orderBy,int begin,int count) {
-		HashMap<String, String> map = new HashMap<String,String>();
-		map.put("online_status", "true");
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("online_status", true);
 		return readableDeviceDao.find(orderBy,begin,count,map);
 	}
 
 	@Override
 	public List<ReadableDevice> viewOnlineDevice(String orderBy, int begin,
-			int count,Map<String,String> filters) {
-		filters.put("online_status", "true");
+			int count,Map<String,Object> filters) {
+		filters.put("online_status", true);
 		return readableDeviceDao.find(orderBy,begin,count,filters);
 	}
 
 	@Override
 	public int onlineDeviceAmount() {
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("online_status", "true");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("online_status", true);
 		return readableDeviceDao.getDeviceAmount(map);
 	}
 
@@ -64,12 +64,12 @@ public class DeviceServiceImpl implements DeviceService {
 		return readableDeviceDao.getDeviceAmount(null);
 	}
 	@Override
-	public int deviceAmount(Map<String,String> filters) {
+	public int deviceAmount(Map<String,Object> filters) {
 		return readableDeviceDao.getDeviceAmount(filters);
 	}
 	@Override
-	public int onlineDeviceAmount(Map<String,String> filters) {
-		filters.put("online_status", "true");
+	public int onlineDeviceAmount(Map<String,Object> filters) {
+		filters.put("online_status", true);
 		return readableDeviceDao.getDeviceAmount(filters);
 	}
 	@Override

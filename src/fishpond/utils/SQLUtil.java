@@ -9,13 +9,13 @@ import org.springframework.util.StringUtils;
 
 public class SQLUtil {
 
-	public static String whereClause(Map<String,String> filters) {
+	public static String whereClause(Map<String,Object> filters) {
 		if (filters == null || filters.size() == 0) {
 			return "";	
 		}else {
 			StringBuilder sb = new StringBuilder();
-			Set<Entry<String, String>> set = filters.entrySet();
-			Iterator<Entry<String, String>> it = set.iterator();
+			Set<Entry<String, Object>> set = filters.entrySet();
+			Iterator<Entry<String, Object>> it = set.iterator();
 			int i = 1;
 			while (it.hasNext()) {
 				if (i == 1) {
@@ -23,8 +23,13 @@ public class SQLUtil {
 				}else{
 					sb.append(" and ");
 				}
-				Entry<String, String> entry  = it.next();
-				sb.append(entry.getKey()+" = "+entry.getValue());
+				Entry<String, Object> entry  = it.next();
+				String key = entry.getKey();
+				Object value = entry.getValue();
+				if (value instanceof String) {
+					value = "'"+value+"'";
+				}
+				sb.append(key+" = "+value);
 				i++;
 			}
 			return sb.toString();

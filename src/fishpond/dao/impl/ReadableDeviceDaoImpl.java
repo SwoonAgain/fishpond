@@ -46,7 +46,7 @@ public class ReadableDeviceDaoImpl implements ReadableDeviceDao {
 	}
 	
 	@Override
-	public List<ReadableDevice> find(String orderBy,int begin,int count,Map<String,String> filters) {
+	public List<ReadableDevice> find(String orderBy,int begin,int count,Map<String,Object> filters) {
 		String order = SQLUtil.orderClause(orderBy,"_id");
 		String where = SQLUtil.whereClause(filters);
 		String limit = SQLUtil.limitClaus(begin,count);
@@ -55,7 +55,7 @@ public class ReadableDeviceDaoImpl implements ReadableDeviceDao {
 	}
 
 	@Override
-	public int getDeviceAmount(Map<String,String> filters) {
+	public int getDeviceAmount(Map<String,Object> filters) {
 		String where = SQLUtil.whereClause(filters);
 		String sql = SQL_COUNT_BASE + where;
 		return jdbcTemplate.queryForObject(sql, Integer.class);

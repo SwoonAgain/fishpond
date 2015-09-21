@@ -57,7 +57,7 @@ public class DeviceController {
 			@RequestParam(value="filter", required=false) String filter,
 			@RequestParam(value="value", required=false) String value,
 			ModelMap model) {
-		Map<String,String> filters = composeFilter(filter, value);
+		Map<String,Object> filters = composeFilter(filter, value);
 		List<ReadableDevice> onlinedevices = deviceService.viewOnlineDevice(sort,countBegin(page),PER_PAGE_COUNT,filters);
 		int devicesAmoount = deviceService.onlineDeviceAmount(filters);
 		int pageAmount = countPageAmount(devicesAmoount, PER_PAGE_COUNT);
@@ -73,7 +73,7 @@ public class DeviceController {
 			@RequestParam(value="filter", required=false) String filter,
 			@RequestParam(value="value", required=false) String value,
 			ModelMap model) {
-		Map<String,String> filters = composeFilter(filter, value);
+		Map<String,Object> filters = composeFilter(filter, value);
 		List<ReadableDevice> alldevices = deviceService.viewAllDevice(sort,countBegin(page),PER_PAGE_COUNT,filters);
 		int devicesAmoount = deviceService.deviceAmount(filters);
 		int pageAmount = countPageAmount(devicesAmoount, PER_PAGE_COUNT);
@@ -109,8 +109,8 @@ public class DeviceController {
 		return (page-1)*PER_PAGE_COUNT;
 	}
 
-	private Map<String,String> composeFilter(String filter,String value){
-		Map<String,String> map = new HashMap<String,String>();
+	private Map<String,Object> composeFilter(String filter,String value){
+		Map<String,Object> map = new HashMap<String,Object>();
 		if (! StringUtils.isEmpty(value)) {
 			map.put(filter, value);
 		}
