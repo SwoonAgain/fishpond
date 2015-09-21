@@ -1,6 +1,8 @@
 package fishpond.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -55,9 +57,9 @@ public class DeviceController {
 			@RequestParam(value="filter", required=false) String filter,
 			@RequestParam(value="value", required=false) String value,
 			ModelMap model) {
-		filter = composeFilter(filter, value);
-		List<ReadableDevice> onlinedevices = deviceService.viewOnlineDevice(sort,countBegin(page),PER_PAGE_COUNT,filter);
-		int devicesAmoount = deviceService.onlineDeviceAmount(filter);
+		Map<String,String> filters = composeFilter(filter, value);
+		List<ReadableDevice> onlinedevices = deviceService.viewOnlineDevice(sort,countBegin(page),PER_PAGE_COUNT,filters);
+		int devicesAmoount = deviceService.onlineDeviceAmount(filters);
 		int pageAmount = countPageAmount(devicesAmoount, PER_PAGE_COUNT);
 		model.addAttribute("onPage", page);
 		model.addAttribute("pageAmount", pageAmount);
@@ -71,9 +73,9 @@ public class DeviceController {
 			@RequestParam(value="filter", required=false) String filter,
 			@RequestParam(value="value", required=false) String value,
 			ModelMap model) {
-		filter = composeFilter(filter, value);
-		List<ReadableDevice> alldevices = deviceService.viewAllDevice(sort,countBegin(page),PER_PAGE_COUNT,filter);
-		int devicesAmoount = deviceService.deviceAmount(filter);
+		Map<String,String> filters = composeFilter(filter, value);
+		List<ReadableDevice> alldevices = deviceService.viewAllDevice(sort,countBegin(page),PER_PAGE_COUNT,filters);
+		int devicesAmoount = deviceService.deviceAmount(filters);
 		int pageAmount = countPageAmount(devicesAmoount, PER_PAGE_COUNT);
 		model.addAttribute("onPage", page);
 		model.addAttribute("pageAmount", pageAmount);
@@ -107,12 +109,11 @@ public class DeviceController {
 		return (page-1)*PER_PAGE_COUNT;
 	}
 
-	private String composeFilter(String filter,String value){
-		if (StringUtils.isEmpty(value)) {
-			filter = "";
-		}else{
-			filter = filter+"-'"+value+"'";
+	private Map<String,String> composeFilter(String filter,String value){
+		Map<String,String> map = new HashMap<String,String>();
+		if (! StringUtils.isEmpty(value)) {
+			map.put(filter, value);
 		}
-		return filter;
+		return map;
 	}
 }

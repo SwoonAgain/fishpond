@@ -2,8 +2,6 @@ package fishpond.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import fishpond.entity.User;
 
 public interface LoginService {

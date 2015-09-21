@@ -3,10 +3,6 @@ package fishpond.server;
 import static fishpond.app.Application.MANDATORS;
 import static fishpond.app.Application.UNKNOWN_DEVICES;
 
-import java.util.Arrays;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import fishpond.app.CommandMappingHelper;

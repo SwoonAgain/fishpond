@@ -1,27 +1,31 @@
 package fishpond.utils;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import org.springframework.util.StringUtils;
 
 public class SQLUtil {
 
-	public static String whereClause(String ...strings) {
-		if (strings == null || strings.length == 0) {
+	public static String whereClause(Map<String,String> filters) {
+		if (filters == null || filters.size() == 0) {
 			return "";	
 		}else {
-			boolean has = false;
 			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < strings.length; i++) {
-				if (StringUtils.isEmpty(strings[i])) {
-					continue;
-				}
-				String[] strs1 = strings[i].split("-");
-				if (! has) {
+			Set<Entry<String, String>> set = filters.entrySet();
+			Iterator<Entry<String, String>> it = set.iterator();
+			int i = 1;
+			while (it.hasNext()) {
+				if (i == 1) {
 					sb.append(" where ");
-					has = true;
-				}else {
+				}else{
 					sb.append(" and ");
 				}
-				sb.append(strs1[0]+" = "+strs1[1]);
+				Entry<String, String> entry  = it.next();
+				sb.append(entry.getKey()+" = "+entry.getValue());
+				i++;
 			}
 			return sb.toString();
 		}

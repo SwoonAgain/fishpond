@@ -3,12 +3,12 @@ package fishpond.dao.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 
 import fishpond.dao.ReadableDeviceDao;
 import fishpond.entity.ReadableDevice;
@@ -46,16 +46,16 @@ public class ReadableDeviceDaoImpl implements ReadableDeviceDao {
 	}
 	
 	@Override
-	public List<ReadableDevice> find(String orderBy,int begin,int count,String ...strings) {
+	public List<ReadableDevice> find(String orderBy,int begin,int count,Map<String,String> filters) {
 		String order = SQLUtil.orderClause(orderBy,"_id");
-		String where = SQLUtil.whereClause(strings);
+		String where = SQLUtil.whereClause(filters);
 		String limit = SQLUtil.limitClaus(begin,count);
 		String sql = SQL_BASE+where+order+limit;
 		return jdbcTemplate.query(sql,rowMapper);
 	}
 
 	@Override
-	public int getDeviceAmount(String... filters) {
+	public int getDeviceAmount(Map<String,String> filters) {
 		String where = SQLUtil.whereClause(filters);
 		String sql = SQL_COUNT_BASE + where;
 		return jdbcTemplate.queryForObject(sql, Integer.class);

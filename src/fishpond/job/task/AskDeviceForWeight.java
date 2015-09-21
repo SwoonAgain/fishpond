@@ -1,18 +1,14 @@
 package fishpond.job.task;
 
-import java.util.Date;
-
 import javax.annotation.Resource;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import fishpond.app.Application;
 import fishpond.app.CommandWriter;
 import fishpond.app.DeviceHelper;
 import fishpond.app.DeviceHelper.DeviceReadException;
 import fishpond.dao.DeviceStatusDao;
-import fishpond.entity.Command;
 
 /**
  * 读取设备的实时重量，并存入数据库中

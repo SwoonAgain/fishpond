@@ -1,6 +1,5 @@
 package fishpond.app;
 
-import fishpond.utils.ConvertUtil;
 
 public class CRC16M {
 

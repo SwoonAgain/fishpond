@@ -1,7 +1,9 @@
 package fishpond.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -28,44 +30,47 @@ public class DeviceServiceImpl implements DeviceService {
 
 	@Override
 	public List<ReadableDevice> viewAllDevice(String orderBy,int begin,int count) {
-		return readableDeviceDao.find(orderBy,begin,count,"");
+		return readableDeviceDao.find(orderBy,begin,count,null);
 	}
 	@Override
 	public List<ReadableDevice> viewAllDevice(String orderBy, int begin,
-			int count, String... strings) {
-		return readableDeviceDao.find(orderBy,begin,count,strings);
+			int count, Map<String,String> filters) {
+		return readableDeviceDao.find(orderBy,begin,count,filters);
 	}
 
 	@Override
 	public List<ReadableDevice> viewOnlineDevice(String orderBy,int begin,int count) {
-		return readableDeviceDao.find(orderBy,begin,count,"online_status-true");
+		HashMap<String, String> map = new HashMap<String,String>();
+		map.put("online_status", "true");
+		return readableDeviceDao.find(orderBy,begin,count,map);
 	}
 
 	@Override
 	public List<ReadableDevice> viewOnlineDevice(String orderBy, int begin,
-			int count, String... strings) {
-		String[] strs = new String[strings.length+1];
-		strs[0] = "online_status-true";
-		System.arraycopy(strings, 0, strs, 1, strings.length);
-		return readableDeviceDao.find(orderBy,begin,count,strs);
+			int count,Map<String,String> filters) {
+		filters.put("online_status", "true");
+		return readableDeviceDao.find(orderBy,begin,count,filters);
 	}
 
 	@Override
 	public int onlineDeviceAmount() {
-		return readableDeviceDao.getDeviceAmount("online_status-true");
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("online_status", "true");
+		return readableDeviceDao.getDeviceAmount(map);
 	}
 
 	@Override
 	public int allDeviceAmount() {
-		return readableDeviceDao.getDeviceAmount("");
+		return readableDeviceDao.getDeviceAmount(null);
 	}
 	@Override
-	public int deviceAmount(String filter) {
-		return readableDeviceDao.getDeviceAmount(filter);
+	public int deviceAmount(Map<String,String> filters) {
+		return readableDeviceDao.getDeviceAmount(filters);
 	}
 	@Override
-	public int onlineDeviceAmount(String filter) {
-		return readableDeviceDao.getDeviceAmount("online_status-true",filter);
+	public int onlineDeviceAmount(Map<String,String> filters) {
+		filters.put("online_status", "true");
+		return readableDeviceDao.getDeviceAmount(filters);
 	}
 	@Override
 	public List<DeviceStatus> getStatus(List<ReadableDevice> onlinedevices) {
