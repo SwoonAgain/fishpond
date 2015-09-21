@@ -8,7 +8,7 @@ import fishpond.entity.User;
 
 public interface LoginService {
 	
-	int checkLoginUser(String username,String password);
+	boolean checkLoginUser(String username,String password);
 	
 	void addUser(User user, int userid);
 
@@ -18,10 +18,10 @@ public interface LoginService {
 	
 	int checkUserDB(User user);
 
-	int getUserId(HttpServletRequest request);
+	int getUserId(String username);
 	
-	int allUserAmount(HttpServletRequest request);
+	int allUserAmount(String username);
 
 	List<User> viewAllUser(String orderBy, int begin, int count,
-			HttpServletRequest request);
+			String username);
 }

@@ -27,10 +27,9 @@ public class UserController {
 	public String getDeviceEditParameter(HttpServletRequest request) {
 		String user = request.getParameter("user");
 		String psword = request.getParameter("psword");
-		int result = loginService.checkLoginUser(user, psword);
-		if (result==1) {
+		boolean result = loginService.checkLoginUser(user, psword);
+		if (result) {
 			request.getSession().setAttribute("username",user);
-			request.getSession().setMaxInactiveInterval(3600);
 			return "redirect:main";
 		}else{
 			return "redirect:/index.jsp";
@@ -41,7 +40,8 @@ public class UserController {
 	public void addUser(User user,HttpServletRequest request){
 		int result = loginService.checkUserDB(user);
 		if(result == 0){
-			int userid = loginService.getUserId(request);
+			String username = (String) request.getAttribute("username");
+			int userid = loginService.getUserId(username);
 			loginService.addUser(user,userid);
 		}else{
 			
@@ -65,8 +65,9 @@ public class UserController {
 	
 	@RequestMapping(value="/list-user/{page}",method=RequestMethod.GET)
 	public String listUser(@PathVariable Integer page,ModelMap model,HttpServletRequest request) {
-		List<User> alldevices = loginService.viewAllUser(null, countBegin(1), PER_PAGE_COUNT,request);
-		int allDevicesAmoount = loginService.allUserAmount(request);
+		String username = (String) request.getAttribute("username");
+		List<User> alldevices = loginService.viewAllUser(null, countBegin(1), PER_PAGE_COUNT,username);
+		int allDevicesAmoount = loginService.allUserAmount(username);
 		int pageAmount = countPageAmount(allDevicesAmoount, PER_PAGE_COUNT);
 		model.addAttribute("onPage", page);
 		model.addAttribute("pageAmount", pageAmount);

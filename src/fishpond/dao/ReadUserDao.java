@@ -8,12 +8,12 @@ import fishpond.entity.User;
 
 public interface ReadUserDao {
 
-	int getUserAmount(HttpServletRequest request);
+	int getUserAmount(String username);
 
 	List<User> findUser(String orderBy, int begin, int count,
-			HttpServletRequest request);
+			String username);
 
-	int getCheckLogin(String username, String password);
+	boolean getCheckLogin(String username, String password);
 
 	void add(User user, int userid);
 
@@ -23,6 +23,6 @@ public interface ReadUserDao {
 
 	int getCheckUserDB(User user);
 
-	int getUserId(HttpServletRequest request);
+	int getUserId(String username);
 
 }

@@ -19,7 +19,7 @@ public class LoginServiceImpl implements LoginService{
 	private ReadUserDao readUserDao;
 	
 	@Override
-	public int checkLoginUser(String username, String password) {
+	public boolean checkLoginUser(String username, String password) {
 		password = EncriptUtil.MD5(password);
 		return readUserDao.getCheckLogin(username, password);
 	}
@@ -45,18 +45,18 @@ public class LoginServiceImpl implements LoginService{
 	}
 
 	@Override
-	public int getUserId(HttpServletRequest request) {
-		return readUserDao.getUserId(request);
+	public int getUserId(String username) {
+		return readUserDao.getUserId(username);
 	}
 	
 	@Override
-	public int allUserAmount(HttpServletRequest request) {
-		return readUserDao.getUserAmount(request);
+	public int allUserAmount(String username) {
+		return readUserDao.getUserAmount(username);
 	}
 	
 	@Override
-	public List<User> viewAllUser(String orderBy,int begin,int count,HttpServletRequest request) {
-		return readUserDao.findUser(orderBy,begin,count,request);
+	public List<User> viewAllUser(String orderBy,int begin,int count,String username) {
+		return readUserDao.findUser(orderBy,begin,count,username);
 	}
 	
 }

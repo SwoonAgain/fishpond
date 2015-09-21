@@ -15,7 +15,8 @@
 
 	<div id="userManage">
 		<div class="actions">
-			<button class="btn btn-default" type="submit">Button</button>
+			<button class="btn btn-default">增加</button>
+			<button class="btn btn-default">删除</button>
 		</div>
 		<div id="userList">
 			<table class="table table-hover" id="devices-list">
@@ -43,6 +44,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -50,6 +52,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -57,6 +60,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -64,6 +68,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -71,6 +76,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -78,6 +84,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -85,6 +92,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -92,6 +100,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -99,6 +108,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -106,6 +116,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -113,6 +124,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -120,6 +132,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -127,6 +140,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -134,6 +148,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -141,6 +156,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -148,6 +164,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -155,6 +172,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -162,6 +180,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -169,6 +188,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -176,6 +196,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -183,6 +204,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -190,6 +212,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -197,6 +220,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -204,6 +228,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -211,6 +236,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -218,6 +244,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -225,6 +252,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -232,6 +260,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -239,6 +268,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -246,6 +276,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -253,6 +284,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -260,6 +292,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -267,6 +300,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -274,6 +308,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -281,6 +316,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -288,6 +324,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -295,6 +332,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -302,6 +340,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -309,6 +348,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -316,6 +356,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -323,6 +364,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -330,6 +372,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 					<tr>
 						<th scope="row"><span class="glyphicon glyphicon-unchecked"
@@ -337,6 +380,7 @@
 						<td>zhangsan</td>
 						<td>13838380438</td>
 						<td>im38@38.cn</td>
+						<td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
 					</tr>
 				</tbody>
 			</table>

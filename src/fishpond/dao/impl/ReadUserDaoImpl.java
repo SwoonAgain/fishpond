@@ -57,24 +57,26 @@ public class ReadUserDaoImpl implements ReadUserDao{
 	}
 	
 	@Override
-	public int getCheckLogin(String username, String password) {
-		String where = " where username = '"+username+"' and psword = '"+password+"'";
+	public boolean getCheckLogin(String username, String password) {
+		String where = " where username = '"+username;
 		String sql = SQL_COUNT_LOGIN + where;
-		return jdbcTemplate.queryForObject(sql, Integer.class);
+		User user =  jdbcTemplate.queryForObject(sql, User.class);
+		if (user != null && password.equals(user.getPsword())) {
+			return true;
+		}
+		return false;
 	}
 
 	
 	@Override
-	public int getUserAmount(HttpServletRequest request) {
-		String username = (String) request.getSession().getAttribute("username");
+	public int getUserAmount(String username) {
 		String where = " where belong = '"+username+"'";
 		String sql = SQL_COUNT_LOGIN + where;
 		return jdbcTemplate.queryForObject(sql, Integer.class);
 	}
 	
 	@Override
-	public List<User> findUser(String orderBy,int begin,int count,HttpServletRequest request) {
-		String username = (String) request.getSession().getAttribute("username");
+	public List<User> findUser(String orderBy,int begin,int count,String username) {
 		String order = SQLUtil.orderClause(orderBy,"_id");
 		String where = " where belong = '"+username+"'";
 		String limit = SQLUtil.limitClaus(begin,count);
@@ -105,8 +107,7 @@ public class ReadUserDaoImpl implements ReadUserDao{
 	}
 
 	@Override
-	public int getUserId(HttpServletRequest request) {
-		String username = (String) request.getSession().getAttribute("username");
+	public int getUserId(String username) {
 		String where = " where username = '"+username+"'";
 		String sql = SQL_USERID + where;
 		return jdbcTemplate.queryForObject(sql, Integer.class);
